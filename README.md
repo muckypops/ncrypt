@@ -1,2 +1,2 @@
 # ncrypt
-a simple file symmetric key encryption utility
+a simple symmetric key encryption utility
