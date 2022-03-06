@@ -43,6 +43,7 @@ int flipcrypt(FILE *fpin, FILE *fpout, char *key, int eord) {
 
         ik++;
         if(ik == (keylen)) ik = 0;
+        
         fputc(tmpchar, fpout);
         tmpchar = fgetc(fpin);
     }
