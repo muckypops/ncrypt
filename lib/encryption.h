@@ -51,10 +51,6 @@ int flipcrypt(FILE *fpin, FILE *fpout, char *key, int eord) {
     return 0;
 }
 
-int encrypt(FILE *fpin, FILE *fpout, char *key) {
-    return flipcrypt(fpin, fpout, key, FC_ENCRYPT);
-}
+int encrypt(FILE *fpin, FILE *fpout, char *key) { return flipcrypt(fpin, fpout, key, FC_ENCRYPT); }
 
-int decrypt(FILE *fpin, FILE *fpout, char *key) {
-    return flipcrypt(fpin, fpout, key, FC_DECRYPT);
-}
+int decrypt(FILE *fpin, FILE *fpout, char *key) { return flipcrypt(fpin, fpout, key, FC_DECRYPT); }
