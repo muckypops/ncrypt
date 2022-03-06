@@ -1,3 +1,11 @@
+/*
+ncrypt is a simple symmetric key file encryption utility.
+
+usage: 
+    encrypt:    cat infilename | ./ncrypt -k <key> > encryptedfilename
+    decrypt:    cat encryptedfilename | ./ncrypt -k <key> -d outfilename
+*/
+
 #include "lib/encryption.h"
 #include <stdio.h>
 #include <unistd.h>
