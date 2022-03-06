@@ -1,2 +1,2 @@
-# pk
-keeper of passwords
+# ncrypt
+a simple file symmetric key encryption utility
