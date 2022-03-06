@@ -2,3 +2,4 @@ workspace.code-workspace
 .vscode/launch.json
 .vscode/tasks.json
 test
+ncrypt
