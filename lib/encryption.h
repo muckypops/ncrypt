@@ -13,9 +13,9 @@ int rotatebits(int inchar, int offset, int lorr) {
     int tmpchar;
 
     switch (lorr) {
-        case RB_LEFT: tmpchar = ((inchar << offset) | (inchar >> (CHAR_BIT - offset))); break;
+        case RB_LEFT:  tmpchar = ((inchar << offset) | (inchar >> (CHAR_BIT - offset))); break;
         case RB_RIGHT: tmpchar = ((inchar >> offset) | (inchar << (CHAR_BIT - offset))); break;
-        default: tmpchar = inchar;
+        default:       tmpchar = inchar;
     }
 
     return tmpchar;
