@@ -81,6 +81,9 @@ int main(int argc, char *argv[]) {
 
     int (*fn)(FILE*, FILE*, char*) = encrypt;
 
+
+    // see https://www.gnu.org/software/libc/manual/html_node/Getopt.html
+    // for more info on how to properly handle these cli args
     while((opt = getopt(argc, argv, "dk:i:o:")) != -1) {
         switch(opt) {
             case 'd': fn = decrypt; break;
@@ -118,6 +121,7 @@ int main(int argc, char *argv[]) {
 
     if(abortflag == 0) { fn(infile, outfile, key); }
     
+    //close files if you have a valid file pointer (do not close std***)
     if((infile  != stdin)  && (infile  != NULL)) { fclose(infile); }
     if((outfile != stdout) && (outfile != NULL)) { fclose(outfile); }
 
