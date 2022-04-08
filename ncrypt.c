@@ -76,14 +76,16 @@ int main(int argc, char *argv[]) {
     FILE *infile = stdin;
     FILE *outfile = stdout;
 
-    char *infilename = NULL;
-    char *outfilename = NULL;
+    char *infilename = NULL;  //NULL value indicates stdin
+    char *outfilename = NULL; //NULL value indicates stdout
 
-    int (*fn)(FILE*, FILE*, char*) = encrypt;
+    int (*fn)(FILE*, FILE*, char*) = encrypt; //encryption will be the default behavior
+                                              //decryption will be set by cli arg if necessary
 
-
-    // see https://www.gnu.org/software/libc/manual/html_node/Getopt.html
+    // doing this WRONG, see example below for guidance
+    // https://www.gnu.org/software/libc/manual/html_node/Getopt.html
     // for more info on how to properly handle these cli args
+    // example uses abort().  don't use this use exit() instead if you have to use anything of that nature.
     while((opt = getopt(argc, argv, "dk:i:o:")) != -1) {
         switch(opt) {
             case 'd': fn = decrypt; break;
@@ -101,9 +103,12 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
+    // duplicate code alert!!
+    // make the next 2 sequences into a function call for each.  
+
     // get a filepointer for input file name if provided
     if(infilename != NULL) {
-        infile = fopen(infilename, "r");
+        infile = fopen(infilename, "r"); //read access
         if(infile == NULL) {
             fprintf(stderr, "Error: could not open input file %s\n", infilename);
             abortflag = 1;
@@ -112,7 +117,7 @@ int main(int argc, char *argv[]) {
 
     // get a filepointer for output file name if provided
     if(outfilename != NULL) {
-        outfile = fopen(outfilename, "w");
+        outfile = fopen(outfilename, "w"); // write access
         if(outfile == NULL) {
             fprintf(stderr, "Error: could not open output file %s\n", outfilename);
             abortflag = 1;
