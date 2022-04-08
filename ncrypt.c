@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    // get a filepointer for input file name given...
+    // get a filepointer for input file name if provided
     if(infilename != NULL) {
         infile = fopen(infilename, "r");
         if(infile == NULL) {
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // get a filepointer for output file name given...
+    // get a filepointer for output file name if provided
     if(outfilename != NULL) {
         outfile = fopen(outfilename, "w");
         if(outfile == NULL) {
