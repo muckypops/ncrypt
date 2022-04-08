@@ -117,10 +117,11 @@ int main(int argc, char *argv[]) {
     }
 
 
-    // redirect input and output away from from std*** if filenames are provided
+    // redirect input and/or output away from from std*** if filenames are provided
     errcount += openfile(infilename,  &infileptr,  "r");
     errcount += openfile(outfilename, &outfileptr, "w");
 
+    // call appropriate function for encryption or decryption
     if(errcount == 0) { fn(infileptr, outfileptr, key); }
     
     //close files if you have a valid file pointer (do not close std***)
