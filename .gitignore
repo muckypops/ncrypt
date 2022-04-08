@@ -5,3 +5,4 @@ ncrypt
 workspace.code-workspace
 ncrypt.c.ncrypt
 .vscode/c_cpp_properties.json
+test.txt
