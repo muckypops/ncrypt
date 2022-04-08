@@ -66,15 +66,28 @@ int encrypt(FILE *fpin, FILE *fpout, char *key) { return flipcrypt(fpin, fpout, 
 
 int decrypt(FILE *fpin, FILE *fpout, char *key) { return flipcrypt(fpin, fpout, key, FC_DECRYPT); }
 
+int openfile(const char *filename, FILE **fileptr, const char *mode) {
+    int errcount = 0;
+    
+    if(filename != NULL) {
+        *fileptr = fopen(filename, mode);
+        if(*fileptr == NULL) {
+            fprintf(stderr, "Error: could not open file %s\n", filename);
+            errcount += 1;
+        }
+    }
+    return errcount;
+}
+
 int main(int argc, char *argv[]) {
 
-    int opt = -1;
-    int abortflag = 0;
+    int opt = -1; 
+    int errcount = 0; //increment this counter each time there is an error
 
     char *key = NULL;
 
-    FILE *infile = stdin;
-    FILE *outfile = stdout;
+    FILE *infileptr = stdin;
+    FILE *outfileptr = stdout;
 
     char *infilename = NULL;  //NULL value indicates stdin
     char *outfilename = NULL; //NULL value indicates stdout
@@ -103,32 +116,16 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    // duplicate code alert!!
-    // make the next 2 sequences into a function call for each.  
 
-    // get a filepointer for input file name if provided
-    if(infilename != NULL) {
-        infile = fopen(infilename, "r"); //read access
-        if(infile == NULL) {
-            fprintf(stderr, "Error: could not open input file %s\n", infilename);
-            abortflag = 1;
-        }
-    }
+    // redirect input and output away from from std*** if filenames are provided
+    errcount += openfile(infilename,  &infileptr,  "r");
+    errcount += openfile(outfilename, &outfileptr, "w");
 
-    // get a filepointer for output file name if provided
-    if(outfilename != NULL) {
-        outfile = fopen(outfilename, "w"); // write access
-        if(outfile == NULL) {
-            fprintf(stderr, "Error: could not open output file %s\n", outfilename);
-            abortflag = 1;
-        }
-    }
-
-    if(abortflag == 0) { fn(infile, outfile, key); }
+    if(errcount == 0) { fn(infileptr, outfileptr, key); }
     
     //close files if you have a valid file pointer (do not close std***)
-    if((infile  != stdin)  && (infile  != NULL)) { fclose(infile); }
-    if((outfile != stdout) && (outfile != NULL)) { fclose(outfile); }
+    if((infileptr  != stdin)  && (infileptr  != NULL)) { fclose(infileptr); }
+    if((outfileptr != stdout) && (outfileptr != NULL)) { fclose(outfileptr); }
 
-    return abortflag;
+    return errcount;
 }
