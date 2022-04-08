@@ -11,6 +11,8 @@ usage:
 #include <string.h>
 #include <limits.h>
 #include <unistd.h>
+#include <getopt.h> // <-- had to add this one for some reason after vs code was updated.
+                    //     worked before without it.
 
 #define FC_ENCRYPT 1
 #define FC_DECRYPT 0
@@ -67,17 +69,26 @@ int decrypt(FILE *fpin, FILE *fpout, char *key) { return flipcrypt(fpin, fpout, 
 int main(int argc, char *argv[]) {
 
     int opt = -1;
+    int abortflag = 0;
 
     char *key = NULL;
 
+    FILE *infile = stdin;
+    FILE *outfile = stdout;
+
+    char *infilename = NULL;
+    char *outfilename = NULL;
+
     int (*fn)(FILE*, FILE*, char*) = encrypt;
 
-    while((opt = getopt(argc, argv, "dk:")) != -1) {
+    while((opt = getopt(argc, argv, "dk:i:o:")) != -1) {
         switch(opt) {
             case 'd': fn = decrypt; break;
             case 'k': key = optarg; break;
+            case 'i': infilename = optarg; break;
+            case 'o': outfilename = optarg; break;
             default:
-                fprintf(stderr, "Usage: %s [-d -k <key>]\n", argv[0]);
+                fprintf(stderr, "Usage: %s [-d -k <key> -i <input file> -o <output file>]\n", argv[0]);
                 return -1;
         }
     }
@@ -87,5 +98,28 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    return fn(stdin, stdout, key);
+    // get a filepointer for input file name given...
+    if(infilename != NULL) {
+        infile = fopen(infilename, "r");
+        if(infile == NULL) {
+            fprintf(stderr, "Error: could not open input file %s\n", infilename);
+            abortflag = 1;
+        }
+    }
+
+    // get a filepointer for output file name given...
+    if(outfilename != NULL) {
+        outfile = fopen(outfilename, "w");
+        if(outfile == NULL) {
+            fprintf(stderr, "Error: could not open output file %s\n", outfilename);
+            abortflag = 1;
+        }
+    }
+
+    if(abortflag == 0) { fn(infile, outfile, key); }
+    
+    if((infile  != stdin)  && (infile  != NULL)) { fclose(infile); }
+    if((outfile != stdout) && (outfile != NULL)) { fclose(outfile); }
+
+    return abortflag;
 }

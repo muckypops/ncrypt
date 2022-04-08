@@ -3,3 +3,5 @@ ncrypt
 .vscode/launch.json
 .vscode/tasks.json
 workspace.code-workspace
+ncrypt.c.ncrypt
+.vscode/c_cpp_properties.json
