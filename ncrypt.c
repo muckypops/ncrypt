@@ -20,7 +20,7 @@ usage:
 #define RB_LEFT 1
 #define RB_RIGHT 0
 
-int rotatebits(int inchar, int offset, int lorr) {
+int rotatebits(const int inchar, const int offset, const int lorr) {
     int tmpchar;
 
     switch (lorr) {
@@ -32,7 +32,7 @@ int rotatebits(int inchar, int offset, int lorr) {
     return tmpchar;
 }
 
-int flipcrypt(FILE *fpin, FILE *fpout, char *key, int eord) {
+int flipcrypt(FILE *fpin, FILE *fpout, const char *key, const int eord) {
 
     int tmpchar;
     int keylen = strlen(key);
@@ -62,10 +62,6 @@ int flipcrypt(FILE *fpin, FILE *fpout, char *key, int eord) {
     return 0;
 }
 
-int encrypt(FILE *fpin, FILE *fpout, char *key) { return flipcrypt(fpin, fpout, key, FC_ENCRYPT); }
-
-int decrypt(FILE *fpin, FILE *fpout, char *key) { return flipcrypt(fpin, fpout, key, FC_DECRYPT); }
-
 int openfile(const char *filename, FILE **fileptr, const char *mode) {
     int errcount = 0;
     
@@ -83,6 +79,8 @@ int main(int argc, char *argv[]) {
 
     int opt = -1; 
     int errcount = 0; //increment this counter each time there is an error
+    int cryptmode = FC_ENCRYPT; //encryption will be the default behavior
+                                //decryption will be set by cli arg if necessary
 
     char *key = NULL;
 
@@ -92,16 +90,13 @@ int main(int argc, char *argv[]) {
     char *infilename = NULL;  //NULL value indicates stdin
     char *outfilename = NULL; //NULL value indicates stdout
 
-    int (*fn)(FILE*, FILE*, char*) = encrypt; //encryption will be the default behavior
-                                              //decryption will be set by cli arg if necessary
-
     // doing this WRONG, see example below for guidance
     // https://www.gnu.org/software/libc/manual/html_node/Getopt.html
     // for more info on how to properly handle these cli args
     // example uses abort().  don't use this use exit() instead if you have to use anything of that nature.
     while((opt = getopt(argc, argv, "dk:i:o:")) != -1) {
         switch(opt) {
-            case 'd': fn = decrypt; break;
+            case 'd': cryptmode = FC_DECRYPT;
             case 'k': key = optarg; break;
             case 'i': infilename = optarg; break;
             case 'o': outfilename = optarg; break;
@@ -122,7 +117,7 @@ int main(int argc, char *argv[]) {
     errcount += openfile(outfilename, &outfileptr, "w");
 
     // call appropriate function for encryption or decryption
-    if(errcount == 0) { fn(infileptr, outfileptr, key); }
+    if(errcount == 0) { flipcrypt(infileptr, outfileptr, key, cryptmode); }
     
     //close files if you have a valid file pointer (do not close std***)
     if((infileptr  != stdin)  && (infileptr  != NULL)) { fclose(infileptr); }
