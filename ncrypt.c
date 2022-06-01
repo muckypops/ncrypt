@@ -51,12 +51,11 @@ int flipcrypt(FILE *fpin, FILE *fpout, const char *key, const int eord) {
 
         if(eord == FC_ENCRYPT) tmpchar = rotatebits(tmpchar, broffset, RB_RIGHT);
 
-        tmpchar = (tmpchar ^ key[ik]);
+        tmpchar = ((~tmpchar) ^ key[ik]);
 
         if(eord == FC_DECRYPT) tmpchar = rotatebits(tmpchar, broffset, RB_LEFT);
 
-        ik++;
-        if(ik == (keylen)) ik = 0;
+        if(++ik == (keylen)) ik = 0;
         
         fputc(tmpchar, fpout);
         tmpchar = fgetc(fpin);
@@ -117,7 +116,7 @@ int main(int argc, char *argv[]) {
     errcount += openfile(infilename,  &infileptr,  "rb");
     errcount += openfile(outfilename, &outfileptr, "wb");
 
-    // call appropriate function for encryption or decryption
+    // perform encryption or decryption
     if(errcount == 0) { flipcrypt(infileptr, outfileptr, key, cryptmode); }
     
     //close files if you have a valid file pointer (do not close std***)
