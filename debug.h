@@ -6,7 +6,7 @@
 // enable debug output by using -DDEBUG on compilation
 // RIGHT NOW IT LOOKS LIKE __VA_ARGS__ CAN 
 // BE USED AS A SUBSTITUTE FOR ANY COMMAND
-// AS STATED!!!
+// AS STATED!!!!
 
 #ifdef DEBUG
 #define DEBUG_DO(...) __VA_ARGS__

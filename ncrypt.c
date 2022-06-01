@@ -13,6 +13,7 @@ usage:
 #include <string.h>
 #include <limits.h>
 #include <unistd.h>
+#include <ctype.h>
 #include <getopt.h> // <-- had to add this one for some reason after vs code was updated.
                     //     worked before without it.
 
@@ -96,12 +97,16 @@ int main(int argc, char *argv[]) {
     // https://www.gnu.org/software/libc/manual/html_node/Getopt.html
     // for more info on how to properly handle these cli args
     // example uses abort().  don't use this use exit() instead if you have to use anything of that nature.
+    // 2022-06-01 UPDATED NEEDS TESTING
     while((opt = getopt(argc, argv, "dk:i:o:")) != -1) {
         switch(opt) {
             case 'd': cryptmode = FC_DECRYPT;
             case 'k': key = optarg; break;
             case 'i': infilename = optarg; break;
             case 'o': outfilename = optarg; break;
+            // case '?':
+            //     if((optopt & ('k' | 'i' | 'o')) == optopt)
+            //         fprintf (stderr, "Option -%c requires an argument.\n", optopt);
             default:
                 fprintf(stderr, "Usage: %s [-d -k <key> -i <input file> -o <output file>]\n", argv[0]);
                 return -1;

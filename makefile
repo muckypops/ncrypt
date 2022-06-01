@@ -8,9 +8,9 @@
 
 
 CC = gcc
-CPP = g++
+# CPP = g++
 CFLAGS = -Wall
-CXXFLAGS = -Wall
+# CXXFLAGS = -Wall
 BIN = ncrypt
 OBJS = ncrypt.o
 DEBUGHEADER = debug.h
@@ -18,18 +18,19 @@ DEBUGHEADER = debug.h
 all:$(BIN)
 
 $(BIN):$(OBJS)
-	$(CPP) $(CXXFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 debug: CFLAGS += -g -DDEBUG#adds debug flags to compiler calls!
-debug: CXXFLAGS += -g -DDEBUG#adds debug flags to compiler calls!
+# debug: CXXFLAGS += -g -DDEBUG#adds debug flags to compiler calls!
 debug: clean # have to do clean compile to get debug functionality into .o OBJS
 debug: all
 
 %.o: %.c %.h $(DEBUGHEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS)-c $< -o $@
 
-%.o: %.cpp %.h $(DEBUGHEADER)
-	$(CPP) $(CXXFLAGS) -c $< -o $@
+# %.o: %.cpp %.h $(DEBUGHEADER)
+# 	$(CPP) $(CXXFLAGS) -c $< -o $@
+
 #$@ - replace with target name
 #$^ - replace with all pre-requisites (w/out duplicates)
 #$< - replace with first pre-requisite (%.cpp in this case)
