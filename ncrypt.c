@@ -23,8 +23,8 @@ usage:
 #define RB_LEFT 1
 #define RB_RIGHT 0
 
-int rotatebits(const int inchar, const int offset, const int lorr) {
-    int tmpchar;
+uint8_t rotatebits(const uint8_t inchar, const int offset, const int lorr) {
+    uint8_t tmpchar;
 
     switch (lorr) {
         case RB_LEFT:  tmpchar = ((inchar << offset) | (inchar >> (CHAR_BIT - offset))); break;
@@ -37,14 +37,14 @@ int rotatebits(const int inchar, const int offset, const int lorr) {
 
 int flipcrypt(FILE *fpin, FILE *fpout, const char *key, const int eord) {
 
-    int tmpchar;
+    uint8_t tmpchar;
     int keylen = strlen(key);
     int ik, broffset;
 
     ik = 0;
 
     tmpchar = fgetc(fpin);
-    while (tmpchar != EOF) {
+    while (tmpchar != (uint8_t)EOF) {
         
         // broffset determines bit rotation offset based on key value
         broffset = (key[ik] % CHAR_BIT);
@@ -122,8 +122,8 @@ int main(int argc, char *argv[]) {
 
 
     // redirect input and/or output away from from std*** if filenames are provided
-    errcount += openfile(infilename,  &infileptr,  "r");
-    errcount += openfile(outfilename, &outfileptr, "w");
+    errcount += openfile(infilename,  &infileptr,  "rb");
+    errcount += openfile(outfilename, &outfileptr, "wb");
 
     // call appropriate function for encryption or decryption
     if(errcount == 0) { flipcrypt(infileptr, outfileptr, key, cryptmode); }
