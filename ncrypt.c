@@ -14,7 +14,7 @@ to encrypt: cat <infilename> | ./ncrypt -k <key> > <outfilename>
 
 same for decryption but with -d option added
 
-to compile: gcc ncrypt.c -o ncrypt
+to compile: gcc ncrypt.c -o ncrypt or just make
 
 */
 
