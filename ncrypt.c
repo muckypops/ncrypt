@@ -104,11 +104,11 @@ int main(int argc, char *argv[]) {
             case 'k': key = optarg; break;
             case 'i': infilename = optarg; break;
             case 'o': outfilename = optarg; break;
-            case '?':
-                if((optopt & ('k' | 'i' | 'o')) == optopt)
-                    fprintf(stderr, "Option -%c detected with no argument.\n", optopt);
-                else
-                    fprintf(stderr, "? case executed for option -%c\n", optopt);
+            // case '?':
+            //     if((optopt & ('k' | 'i' | 'o')) == optopt)
+            //         fprintf(stderr, "Option -%c detected with no argument.\n", optopt);
+            //     else
+            //         fprintf(stderr, "? case executed for option -%c\n", optopt);
             default:
                 fprintf(stderr, "Usage: %s [-d -k <key> -i <input file> -o <output file>]\n", argv[0]);
                 return -1;
