@@ -93,22 +93,14 @@ int main(int argc, char *argv[]) {
     char *infilename = NULL;  //NULL value indicates stdin
     char *outfilename = NULL; //NULL value indicates stdout
 
-    // doing this WRONG, see example below for guidance
+    // see example below for guidance
     // https://www.gnu.org/software/libc/manual/html_node/Getopt.html
-    // for more info on how to properly handle these cli args
-    // example uses abort().  don't use this use exit() instead if you have to use anything of that nature.
-    // 2022-06-01 UPDATED NEEDS TESTING
     while((opt = getopt(argc, argv, "dk:i:o:")) != -1) {
         switch(opt) {
             case 'd': cryptmode = FC_DECRYPT;
             case 'k': key = optarg; break;
             case 'i': infilename = optarg; break;
             case 'o': outfilename = optarg; break;
-            // case '?':
-            //     if((optopt & ('k' | 'i' | 'o')) == optopt)
-            //         fprintf(stderr, "Option -%c detected with no argument.\n", optopt);
-            //     else
-            //         fprintf(stderr, "? case executed for option -%c\n", optopt);
             default:
                 fprintf(stderr, "Usage: %s [-d -k <key> -i <input file> -o <output file>]\n", argv[0]);
                 return -1;
