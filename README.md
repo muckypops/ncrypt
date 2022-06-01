@@ -1,7 +1,7 @@
 # ncrypt
 a simple symmetric key encryption utility
 
-Usage: ./ncrypt [-d -k <key> -i <input file> -o <output file>]
+Usage: ./ncrypt [-d -k \<key\> -i \<input file\> -o \<output file\>]
 
 to compile: gcc ncrypt.c -o ncrypt
 
