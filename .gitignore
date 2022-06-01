@@ -10,3 +10,5 @@ test.txt.ncrypt
 test.ncrypt
 ncrypt.o
 test.decrypt
+ncrypt.dSYM/Contents/Info.plist
+.DS_Store
