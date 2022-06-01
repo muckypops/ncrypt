@@ -10,7 +10,7 @@ stdin and stdout respectively and can be used as follows:
 
 to encrypt: cat <infilename> | ./ncrypt -k <key> > <outfilename>
         or: cat <infilename> | ./ncrypt -k <key> -o <outfilename>
-        or: ./ncrypt -k <key> -i <input file> > <outfilename>
+        or: ./ncrypt -k <key> -i <infilename> > <outfilename>
 
 same for decryption but with -d option added
 
