@@ -1,12 +1,23 @@
 /*
 ncrypt is a simple symmetric key file encryption utility.
 
-usage: 
-    encrypt:    cat <infilename> | ./ncrypt -k <key> > <encryptedfilename>
-    decrypt:    cat <encryptedfilename> | ./ncrypt -k <key> -d > <outfilename>
+Usage: 
 
-    UPDATE THIS 
+./ncrypt [-d -k <key> -i <infilename> -o <outfilename>]
+
+if no input or output filename is provided ncrypt will use 
+stdin and stdout respectively and can be used as follows:
+
+to encrypt: cat <infilename> | ./ncrypt -k <key> > <outfilename>
+        or: cat <infilename> | ./ncrypt -k <key> -o <outfilename>
+        or: ./ncrypt -k <key> -i <input file> > <outfilename>
+
+same for decryption but with -d option added
+
+to compile: gcc ncrypt.c -o ncrypt
+
 */
+
 #include "debug.h"
 #include <stdio.h>
 #include <stdlib.h>
