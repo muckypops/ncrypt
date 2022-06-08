@@ -8,5 +8,14 @@
 #define RB_RIGHT 0
 
 
+class Cryptor {
+public:
+    Cryptor();
+    ~Cryptor();
+private:
+
+protected:
+};
+
 
 #endif
