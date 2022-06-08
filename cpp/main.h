@@ -3,12 +3,12 @@
 
 // library headers
 #include <iostream>
+#include <fstream>
 #include <getopt.h>
 
 // my headers
 #include "debug.h"
 #include "cryptor.h"
-#include "file.h"
 
 
 #endif

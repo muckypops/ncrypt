@@ -7,6 +7,7 @@
 #define RB_LEFT 1
 #define RB_RIGHT 0
 
+#include <string>
 
 class Cryptor {
 public:
