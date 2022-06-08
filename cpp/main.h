@@ -5,7 +5,6 @@
 #include <iostream>
 #include <getopt.h>
 
-
 // my headers
 #include "debug.h"
 #include "cryptor.h"
